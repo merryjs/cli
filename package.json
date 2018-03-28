@@ -17,8 +17,7 @@
     "lint": "tslint --project ./tsconfig.json --fix",
     "start": "tsc -w",
     "prepublishOnly": "tsc",
-    "precommit": "pretty-quick --staged",
-    "postinstall": "node lib/welcome"
+    "precommit": "pretty-quick --staged"
   },
   "typings": "index.d.ts",
   "keywords": ["cli-app", "cli", "merry", "merryjs-cli"],
