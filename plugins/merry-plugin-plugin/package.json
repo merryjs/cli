@@ -1,0 +1,7 @@
+{
+  "name": "merry-plugin-plugin",
+  "version": "1.0.1",
+  "main": "index.js",
+  "license": "MIT",
+  "description": "generate merry plugin"
+}

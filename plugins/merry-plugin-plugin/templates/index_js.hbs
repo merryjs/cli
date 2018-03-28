@@ -1,0 +1,25 @@
+const path = require('path')
+module.exports = (api) => {
+	api.command('{{hyphenate name}} [name]').action(async (name) => {
+		// define your own questions or remove it if you don't need it
+		const answers = await api.prompt([
+			{
+				name: 'name',
+				message: 'Your questions?',
+				validate: {{camelcase name}}Name => {
+					if (!{{camelcase name}}Name) {
+						return '{{camelcase name}} name are required'
+					}
+					return true
+				},
+				default: name,
+			},
+		])
+		// write file to api.conf.dist/path/to/index.js
+		await api.tmplWithFormat(
+			'const name = "{{hyphenate name}}";',
+			path.join(api.conf.dist, 'path/to/', 'index.js'),
+			answers
+		)
+	})
+}

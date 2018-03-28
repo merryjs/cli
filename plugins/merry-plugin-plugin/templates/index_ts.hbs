@@ -1,0 +1,33 @@
+import { Plugin } from '@merryjs/cli/plugin'
+import path from 'path'
+/**
+ * {{pascalcase name}}Answers
+ */
+export interface {{pascalcase name}}Answers {
+	name: string
+}
+export default (api: Plugin) => {
+
+	api.command('{{hyphenate name}} [name]').action(async (name: string) => {
+		// define your own questions or remove it if you don't need it
+		const answers = await api.prompt<{{pascalcase name}}Answers>([
+			{
+				name: 'name',
+				message: 'Your questions?',
+				validate: {{camelcase name}}Name => {
+					if (!{{camelcase name}}Name) {
+						return '{{camelcase name}} name are required'
+					}
+					return true
+				},
+				default: name,
+			},
+		])
+		// write file to api.conf.dist/path/to/index.js
+		await api.tmplWithFormat(
+			'const name = "{{hyphenate name}}";',
+			path.join(api.conf.dist, 'path/to/', 'index.js'),
+			answers
+		)
+	})
+}

@@ -1,0 +1,11 @@
+node_modules
+*.js
+*.d.ts
+.yo-rc.json
+.vscode
+dist/
+package-lock.json
+website/build
+yarn-error.log
+!website/**/*.js
+plugins/**/yarn.lock

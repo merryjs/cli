@@ -1,0 +1,11 @@
+{
+  "name": "merry-plugin-dl",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "description": "download and extract files use download",
+  "keywords": ["merry-plugin-dl", "merry-plugin"],
+  "dependencies": {
+    "download": "^6.2.5"
+  }
+}

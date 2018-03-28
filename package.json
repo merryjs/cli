@@ -1,0 +1,68 @@
+{
+  "name": "@merryjs/cli",
+  "version": "1.5.0",
+  "description": "A cli for everything ❤️",
+  "license": "MIT",
+  "repository": "bang88/merry-cli",
+  "author": "bang <sqibang@gmail.com> github.com/bang88 ",
+  "bin": {
+    "merry": "cli.js"
+  },
+  "engines": {
+    "node": ">=6"
+  },
+  "scripts": {
+    "test": "npm run lint && ava --verbose",
+    "pretest": "tsc",
+    "lint": "tslint --project ./tsconfig.json --fix",
+    "start": "tsc -w",
+    "prepublishOnly": "tsc",
+    "precommit": "pretty-quick --staged",
+    "postinstall": "node welcome"
+  },
+  "typings": "index.d.ts",
+  "keywords": [
+    "cli-app",
+    "cli",
+    "merry",
+    "merryjs-cli"
+  ],
+  "dependencies": {
+    "chalk": "^2.3.1",
+    "change-case": "^3.0.2",
+    "check-dependencies": "^1.1.0",
+    "colors": "^1.1.2",
+    "commander": "^2.14.1",
+    "debug": "^3.1.0",
+    "diff": "^3.4.0",
+    "execa": "^0.10.0",
+    "fs-extra": "^5.0.0",
+    "global-dirs": "^0.1.1",
+    "handlebars": "^4.0.11",
+    "handlebars-helpers": "^0.10.0",
+    "inquirer": "^5.1.0",
+    "inquirer-autocomplete-prompt": "^0.12.2",
+    "ora": "^2.0.0",
+    "pkg-conf": "^2.1.0",
+    "pkg-up": "^2.0.0",
+    "prettier": "^1.11.0",
+    "requireg": "^0.1.7",
+    "resolve-pkg": "^1.0.0",
+    "tslib": "^1.9.0"
+  },
+  "devDependencies": {
+    "@types/debug": "^0.0.30",
+    "@types/diff": "^3.2.2",
+    "@types/fs-extra": "^5.0.1",
+    "@types/handlebars": "^4.0.36",
+    "@types/inquirer": "^0.0.40",
+    "@types/node": "^9.4.6",
+    "@types/prettier": "^1.10.0",
+    "ava": "^0.25.0",
+    "husky": "^0.14.3",
+    "pretty-quick": "^1.4.1",
+    "ts-node": "^5.0.0",
+    "tslint": "^5.9.1",
+    "typescript": "^2.8.1"
+  }
+}

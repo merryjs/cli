@@ -1,0 +1,21 @@
+{
+  "scripts": {
+    "start": "nodemon -w pages --exec docusaurus-start",
+    "build": "docusaurus-build",
+    "publish-gh-pages": "docusaurus-publish",
+    "write-translations": "docusaurus-write-translations",
+    "version": "docusaurus-version",
+    "rename-version": "docusaurus-rename-version"
+  },
+  "devDependencies": {
+    "docusaurus": "^1.0.9",
+    "nodemon": "^1.17.2"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "node_modules/*",
+      "build/*"
+    ]
+  },
+  "version": "1.0.0"
+}
