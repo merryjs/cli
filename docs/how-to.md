@@ -38,7 +38,7 @@ Demonstrate how to create a plugin that generate a `React` Component
 file `component.ts`
 
 ```ts
-import { Plugin, Action } from '@merryjs/cli/plugin'
+import { Plugin, Action } from '@merryjs/cli/lib/plugin'
 import { getPath } from './utils'
 export interface ComponentAnswers {
 	name: string
@@ -140,7 +140,7 @@ export default async (api: Plugin) => {
 entry file `index.ts`
 
 ```ts
-import { Plugin } from '@merryjs/cli/plugin'
+import { Plugin, Action } from '@merryjs/cli/lib/plugin'
 import path from 'path'
 import component from './component'
 
