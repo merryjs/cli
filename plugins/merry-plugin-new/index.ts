@@ -1,4 +1,4 @@
-import { Plugin } from '../../plugin'
+import { Plugin } from '../../lib/plugin'
 import path from 'path'
 const debug = require('debug')('plugin:new')
 import degit from 'degit'

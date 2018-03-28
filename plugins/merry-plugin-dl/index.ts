@@ -1,5 +1,5 @@
 const download = require('download')
-import { Plugin } from '../../plugin'
+import { Plugin } from '../../lib/plugin'
 
 export default (api: Plugin) => {
 	api

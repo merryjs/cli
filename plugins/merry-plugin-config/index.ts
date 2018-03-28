@@ -1,4 +1,4 @@
-import { Plugin, Package } from '../../plugin'
+import { Plugin, Package } from '../../lib/plugin'
 import http from 'http'
 import path from 'path'
 import chalk from 'chalk'

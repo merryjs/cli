@@ -1,7 +1,7 @@
 import test from 'ava'
-import { Plugin } from '../plugin'
-import { getProgram } from '../commander'
-import { getConf } from '../config'
+import { Plugin } from '../lib/plugin'
+import { getProgram } from '../lib/commander'
+import { getConf } from '../lib/config'
 
 const [program, conf, cwd] = [
 	getProgram(),

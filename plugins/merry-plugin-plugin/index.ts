@@ -1,6 +1,6 @@
-import { Plugin, Action } from '../../plugin'
+import { Action, Plugin } from '../../lib/plugin'
 import path from 'path'
-import { linkPluginDeps, install } from '../../npm'
+import { linkPluginDeps, install } from '../../lib/npm'
 export interface PluginAnswers {
 	name: string
 	description?: string

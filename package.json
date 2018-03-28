@@ -6,7 +6,7 @@
   "repository": "bang88/merry-cli",
   "author": "bang <sqibang@gmail.com> github.com/bang88 ",
   "bin": {
-    "merry": "cli.js"
+    "merry": "lib/cli.js"
   },
   "engines": {
     "node": ">=6"
@@ -18,15 +18,10 @@
     "start": "tsc -w",
     "prepublishOnly": "tsc",
     "precommit": "pretty-quick --staged",
-    "postinstall": "node welcome"
+    "postinstall": "node lib/welcome"
   },
   "typings": "index.d.ts",
-  "keywords": [
-    "cli-app",
-    "cli",
-    "merry",
-    "merryjs-cli"
-  ],
+  "keywords": ["cli-app", "cli", "merry", "merryjs-cli"],
   "dependencies": {
     "chalk": "^2.3.1",
     "change-case": "^3.0.2",

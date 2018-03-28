@@ -1,15 +1,14 @@
 import fs from 'fs-extra'
 import path from 'path'
 import program from 'commander'
-import { getProgram } from './commander'
+import { getProgram } from './lib/commander'
 import pkgUp from 'pkg-up'
 import resolvePkg from 'resolve-pkg'
-import { PkgConf, getConf } from './config'
+import { PkgConf, getConf } from './lib/config'
 const debug = require('debug')('app:main')
-import { Plugin, Package } from './plugin'
+import { Plugin, Package } from './lib/plugin'
 const requireg = require('requireg')
 const globalDirs = require('global-dirs')
-
 export class App {
 	/**
 	 * program
