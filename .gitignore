@@ -1,6 +1,7 @@
 node_modules
 *.js
 *.d.ts
+!typings.d.ts
 .yo-rc.json
 .vscode
 dist/
