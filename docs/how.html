@@ -1,0 +1,202 @@
+<html lang="en"><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>How to create plugin · Merry</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta property="og:title" content="How to create plugin · Merry"/><meta property="og:type" content="website"/><meta property="og:url" content="https://merryjs.github.io/cli/index.html"/><meta property="og:description" content="A `merry` plugin can write via `JavaScript` or `TypeScript`. both of them are identical."/><link rel="shortcut icon" href="/cli/img/favicon.png"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><link rel="stylesheet" href="/cli/css/main.css"/></head><body class="sideNavVisible doc separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/cli/"><h2 class="headerTitle">Merry</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavItemActive"><a href="/cli/docs/how.html" target="_self">Plugins</a></li><li class=""><a href="/cli/docs/api.html" target="_self">API</a></li><li class=""><a href="https://github.com/merryjs/cli" target="_self">GitHub</a></li><li class=""><a target="_self"></a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://merryjs.github.io/cli/edit/master/docs/how-to.md" target="_blank">Edit</a><h1>How to create plugin</h1></header><article><div><span><p>A <code>merry</code> plugin can write via <code>JavaScript</code> or <code>TypeScript</code>. both of them are identical.</p>
+<p>You can create a new plugin using</p>
+<pre><code class="hljs css sh">merry plugin -h
+</code></pre>
+<p>we have a builtin plugin can help you
+generate a new one. and It will ask you a few simple questions that how your plugin will
+work.</p>
+<h2><a class="anchor" aria-hidden="true" id="example"></a><a href="#example" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Example</h2>
+<p>A simple Plugin: the <code>api</code> parameter is a instance of <a href="api.html"><code>Plugin</code></a>.</p>
+<p>file <code>index.js</code></p>
+<pre><code class="hljs css js"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-params">api</span> =&gt;</span> {
+    <span class="hljs-comment">// note if you want use async you need set your node engine version &gt;= 8</span>
+    <span class="hljs-comment">// or using typescript</span>
+    api.command(<span class="hljs-string">'pluginName [cmd]'</span>).action(<span class="hljs-keyword">async</span> (cmd, options) =&gt; {
+        <span class="hljs-comment">// ...</span>
+    })
+}
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="example-react-component"></a><a href="#example-react-component" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Example React Component</h2>
+<p>Demonstrate how to create a plugin that generate a <code>React</code> Component
+file <code>component.ts</code></p>
+<pre><code class="hljs css ts"><span class="hljs-keyword">import</span> { Plugin, Action } <span class="hljs-keyword">from</span> <span class="hljs-string">'@merryjs/cli/plugin'</span>
+<span class="hljs-keyword">import</span> { getPath } <span class="hljs-keyword">from</span> <span class="hljs-string">'./utils'</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> ComponentAnswers {
+    name: <span class="hljs-built_in">string</span>
+    style: <span class="hljs-built_in">boolean</span>
+    isRouteComponent: <span class="hljs-built_in">boolean</span>
+    route?: <span class="hljs-built_in">string</span>
+    routeGroup: <span class="hljs-built_in">string</span>
+    componentTemplatePath?: <span class="hljs-built_in">string</span>
+}
+<span class="hljs-comment">/**
+ * run component action
+ * @param api
+ * @param answers
+ */</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> runComponentAction = <span class="hljs-keyword">async</span> (
+    api: Plugin,
+    answers: ComponentAnswers
+) =&gt; {
+    <span class="hljs-keyword">const</span> group = answers.routeGroup ? <span class="hljs-string">`{{properCase routeGroup}}/`</span> : <span class="hljs-string">''</span>
+    <span class="hljs-keyword">const</span> componentTemplatePath = <span class="hljs-string">`./templates/component.hbs`</span>
+
+    <span class="hljs-keyword">const</span> dist =
+        answers.isRouteComponent &amp;&amp; answers.route
+            ? <span class="hljs-string">`routes/<span class="hljs-subst">${group}</span>{{properCase route}}`</span>
+            : <span class="hljs-string">'components'</span>
+
+    <span class="hljs-keyword">const</span> options = { ...(answers <span class="hljs-keyword">as</span> <span class="hljs-built_in">any</span>), ...{ dist }, cwd: api.conf.dist }
+
+    <span class="hljs-keyword">const</span> actions: Action[] = [
+        {
+            path: getPath(options, <span class="hljs-string">'index.tsx'</span>),
+            templateFile: componentTemplatePath,
+            format: {
+                parser: <span class="hljs-string">'typescript'</span>,
+            },
+        },
+    ]
+
+    <span class="hljs-comment">// If they want a CSS file, add styles.css</span>
+    <span class="hljs-keyword">if</span> (answers.style) {
+        actions.push({
+            path: getPath(options, <span class="hljs-string">'styles.tsx'</span>),
+            templateFile: <span class="hljs-string">'./templates/styles.hbs'</span>,
+            format: {
+                parser: <span class="hljs-string">'typescript'</span>,
+            },
+        })
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> api.runActions(actions, answers)
+}
+<span class="hljs-comment">/**
+ * component generate
+ */</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">async</span> (api: Plugin) =&gt; {
+    <span class="hljs-keyword">const</span> answers = <span class="hljs-keyword">await</span> api.prompt&lt;ComponentAnswers&gt;([
+        {
+            <span class="hljs-keyword">type</span>: <span class="hljs-string">'input'</span>,
+            name: <span class="hljs-string">'name'</span>,
+            message: <span class="hljs-string">'Whats your component Name?'</span>,
+            validate: <span class="hljs-function"><span class="hljs-params">value</span> =&gt;</span> {
+                <span class="hljs-keyword">if</span> (<span class="hljs-regexp">/.+/</span>.test(value)) {
+                    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>
+                }
+
+                <span class="hljs-keyword">return</span> <span class="hljs-string">'The name is required'</span>
+            },
+        },
+        {
+            <span class="hljs-keyword">type</span>: <span class="hljs-string">'confirm'</span>,
+            name: <span class="hljs-string">'style'</span>,
+            <span class="hljs-keyword">default</span>: <span class="hljs-literal">true</span>,
+            message: <span class="hljs-string">'Does it have styling?'</span>,
+        },
+        {
+            <span class="hljs-keyword">type</span>: <span class="hljs-string">'confirm'</span>,
+            name: <span class="hljs-string">'isRouteComponent'</span>,
+            <span class="hljs-keyword">default</span>: <span class="hljs-literal">false</span>,
+            message: <span class="hljs-string">'Create a Component under routes?'</span>,
+        },
+        {
+            <span class="hljs-keyword">type</span>: <span class="hljs-string">'input'</span>,
+            name: <span class="hljs-string">'route'</span>,
+            message: <span class="hljs-string">'Which route do you want use?'</span>,
+            when: <span class="hljs-function"><span class="hljs-params">data</span> =&gt;</span> data.isRouteComponent,
+        },
+        {
+            <span class="hljs-keyword">type</span>: <span class="hljs-string">'input'</span>,
+            name: <span class="hljs-string">'routeGroup'</span>,
+            <span class="hljs-keyword">default</span>: <span class="hljs-string">''</span>,
+            message:
+                <span class="hljs-string">'Do you want creating a grouped route component and which group do you want use ?'</span>,
+            when: <span class="hljs-function"><span class="hljs-params">data</span> =&gt;</span> data.route,
+        },
+    ])
+    <span class="hljs-keyword">await</span> runComponentAction(api, answers)
+}
+</code></pre>
+<p>entry file <code>index.ts</code></p>
+<pre><code class="hljs css ts"><span class="hljs-keyword">import</span> { Plugin } <span class="hljs-keyword">from</span> <span class="hljs-string">'@merryjs/cli/plugin'</span>
+<span class="hljs-keyword">import</span> path <span class="hljs-keyword">from</span> <span class="hljs-string">'path'</span>
+<span class="hljs-keyword">import</span> component <span class="hljs-keyword">from</span> <span class="hljs-string">'./component'</span>
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">enum</span> GeneratorType {
+    ROUTE = <span class="hljs-string">'route'</span>,
+    COMPONENT = <span class="hljs-string">'component'</span>,
+    FORM = <span class="hljs-string">'form'</span>,
+}
+<span class="hljs-keyword">const</span> supportedTypes = [
+    GeneratorType.FORM,
+    GeneratorType.ROUTE,
+    GeneratorType.COMPONENT,
+]
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> ReactGeneratorOptions {
+    swagger: <span class="hljs-built_in">string</span>
+    menu: <span class="hljs-built_in">string</span>
+}
+<span class="hljs-comment">/**
+ * ReactGeneratorAnswers
+ */</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> ReactGeneratorAnswers {
+    name: <span class="hljs-built_in">string</span>
+}
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> (api: Plugin) =&gt; {
+    api
+        .command(<span class="hljs-string">'react [name]'</span>)
+        .usage(supportedTypes.map(<span class="hljs-function"><span class="hljs-params">cmd</span> =&gt;</span> <span class="hljs-string">`[<span class="hljs-subst">${cmd}</span>]`</span>).join(<span class="hljs-string">' | '</span>))
+        .action(<span class="hljs-keyword">async</span> (name: GeneratorType, options: ReactGeneratorOptions) =&gt; {
+            <span class="hljs-keyword">switch</span> (name) {
+                <span class="hljs-keyword">case</span> GeneratorType.ROUTE:
+                    <span class="hljs-comment">// ...</span>
+                    <span class="hljs-keyword">break</span>
+                <span class="hljs-keyword">case</span> GeneratorType.COMPONENT:
+                    <span class="hljs-keyword">await</span> component(api)
+                    <span class="hljs-keyword">break</span>
+                <span class="hljs-keyword">case</span> GeneratorType.FORM:
+                    <span class="hljs-comment">// await checkOptions(api, options)</span>
+                    <span class="hljs-comment">// await form(api, options)</span>
+                    <span class="hljs-keyword">break</span>
+                <span class="hljs-keyword">default</span>:
+                    <span class="hljs-keyword">if</span> (!name) {
+                        api.log(<span class="hljs-string">'[%s] is not a known command'</span>, name)
+                    } <span class="hljs-keyword">else</span> {
+                        api.log(<span class="hljs-string">'unknown commands [%s]'</span>, name)
+                    }
+                    api.log(<span class="hljs-string">`supported commands: %O`</span>, supportedTypes)
+                    <span class="hljs-keyword">break</span>
+            }
+        })
+}
+</code></pre>
+<p>file <code>component.hbs</code></p>
+<pre><code class="hljs css hbs"><span class="xml">/*
+ * *****************************************
+ * </span><span class="hljs-template-variable">{{ properCase name }}</span><span class="xml"> =&gt; Component
+ * *****************************************
+ */
+
+import React from 'react'
+</span><span class="hljs-template-tag">{{#<span class="hljs-name"><span class="hljs-builtin-name">if</span></span> style}}</span><span class="xml">
+import styles from './style.css'
+</span><span class="hljs-template-tag">{{/<span class="hljs-name"><span class="hljs-builtin-name">if</span></span>}}</span><span class="xml">
+
+export interface </span><span class="hljs-template-variable">{{ properCase name }}</span><span class="xml">Props {
+  children?: React.ReactNode
+}
+export interface </span><span class="hljs-template-variable">{{ properCase name }}</span><span class="xml">State {
+
+}
+
+export class </span><span class="hljs-template-variable">{{ properCase name }}</span><span class="xml"> extends React.Component<span class="hljs-tag">&lt;</span></span><span class="hljs-template-variable">{{ properCase name }}</span><span class="xml"><span class="hljs-tag"><span class="hljs-attr">Props</span>, </span></span><span class="hljs-template-variable">{{ properCase name }}</span><span class="xml"><span class="hljs-tag"><span class="hljs-attr">State</span>&gt;</span> {
+  render() {
+    return <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+      This is </span><span class="hljs-template-variable">{{properCase name}}</span><span class="xml"> Component !
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+  }
+}
+</span></code></pre>
+</span></div></article></div><div class="docs-prevnext"></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#example">Example</a></li><li><a href="#example-react-component">Example React Component</a></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/cli/" class="nav-home"></a><div><h5>Docs</h5><a href="/cli/docs/api.html">API Reference</a><a href="/cli/docs/how.html">How to create plugin</a><a class="github-button" href="https://github.com/merryjs/cli" data-icon="octicon-star" data-count-href="/merryjs/cli/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a></div></section></footer></div></body></html>

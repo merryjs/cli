@@ -1,0 +1,187 @@
+<html lang="en"><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>API References · Merry</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta property="og:title" content="API References · Merry"/><meta property="og:type" content="website"/><meta property="og:url" content="https://merryjs.github.io/cli/index.html"/><meta property="og:description" content="There have a `TypeScript` type definitions which reflect the `api&#x27;s` documentation"/><link rel="shortcut icon" href="/cli/img/favicon.png"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><link rel="stylesheet" href="/cli/css/main.css"/></head><body class="sideNavVisible doc separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/cli/"><h2 class="headerTitle">Merry</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class=""><a href="/cli/docs/how.html" target="_self">Plugins</a></li><li class="siteNavItemActive"><a href="/cli/docs/api.html" target="_self">API</a></li><li class=""><a href="https://github.com/merryjs/cli" target="_self">GitHub</a></li><li class=""><a target="_self"></a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://merryjs.github.io/cli/edit/master/docs/api.md" target="_blank">Edit</a><h1>API References</h1></header><article><div><span><p>There have a <code>TypeScript</code> type definitions which reflect the <code>api's</code> documentation</p>
+<p>An <code>api</code> is a instance of <code>Plugin</code></p>
+<h2><a class="anchor" aria-hidden="true" id="plugin-definitions"></a><a href="#plugin-definitions" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Plugin Definitions</h2>
+<pre><code class="hljs css typescript"><span class="hljs-comment">/// &lt;reference types="handlebars" /&gt;</span>
+<span class="hljs-comment">/// &lt;reference types="inquirer" /&gt;</span>
+<span class="hljs-comment">/// &lt;reference types="debug" /&gt;</span>
+<span class="hljs-keyword">import</span> program <span class="hljs-keyword">from</span> <span class="hljs-string">'commander'</span>
+<span class="hljs-keyword">import</span> fs, { WriteFileOptions } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs-extra'</span>
+<span class="hljs-keyword">import</span> inquirer, { Questions, Answers } <span class="hljs-keyword">from</span> <span class="hljs-string">'inquirer'</span>
+<span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> npm <span class="hljs-keyword">from</span> <span class="hljs-string">'./npm'</span>
+<span class="hljs-keyword">import</span> prettier, { Options } <span class="hljs-keyword">from</span> <span class="hljs-string">'prettier'</span>
+<span class="hljs-keyword">import</span> debug <span class="hljs-keyword">from</span> <span class="hljs-string">'debug'</span>
+<span class="hljs-keyword">import</span> <span class="hljs-string">'colors'</span>
+<span class="hljs-keyword">import</span> { PkgConf } <span class="hljs-keyword">from</span> <span class="hljs-string">'./config'</span>
+<span class="hljs-keyword">import</span> Handlebars <span class="hljs-keyword">from</span> <span class="hljs-string">'./handlebars'</span>
+<span class="hljs-comment">/**
+ * Action
+ */</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> Action {
+    <span class="hljs-comment">/**
+     * path to new file write to
+     */</span>
+    path: <span class="hljs-built_in">string</span>
+    <span class="hljs-comment">/**
+     * path to template file
+     */</span>
+    templateFile: <span class="hljs-built_in">string</span>
+    <span class="hljs-comment">/**
+     * format code
+     * - provide a prettier configurations if is an object
+     * - true use default options
+     */</span>
+    format?: Options | <span class="hljs-built_in">boolean</span>
+}
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> Package {
+    name: <span class="hljs-built_in">string</span>
+    version: <span class="hljs-built_in">string</span>
+    description: <span class="hljs-built_in">string</span>
+    dependencies: {
+        [key: <span class="hljs-built_in">string</span>]: <span class="hljs-built_in">string</span>
+    }
+    devDependencies: {
+        [key: <span class="hljs-built_in">string</span>]: <span class="hljs-built_in">string</span>
+    }
+    merry: PkgConf
+    [key: <span class="hljs-built_in">string</span>]: <span class="hljs-built_in">any</span>
+}
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">declare</span> <span class="hljs-keyword">class</span> Plugin {
+    <span class="hljs-keyword">private</span> readonly program
+    readonly conf: PkgConf
+    <span class="hljs-comment">/**
+     * absolutely package path
+     */</span>
+    pkgCwd: <span class="hljs-built_in">string</span>
+    readonly fs: <span class="hljs-keyword">typeof</span> fs
+    readonly npm: <span class="hljs-keyword">typeof</span> npm
+    readonly prettier: <span class="hljs-keyword">typeof</span> prettier
+    readonly handlebars: <span class="hljs-keyword">typeof</span> Handlebars
+    readonly inquirer: inquirer.Inquirer
+    readonly pkg: Package
+    <span class="hljs-comment">/**
+     * plugin current working directory
+     */</span>
+    readonly cwd: <span class="hljs-built_in">string</span>
+    <span class="hljs-keyword">constructor</span>(<span class="hljs-params">
+        program: program.CommanderStatic,
+        conf: PkgConf,
+        <span class="hljs-comment">/**
+         * absolutely package path
+         */</span>
+        pkgCwd: <span class="hljs-built_in">string</span>
+    </span>)
+    /**
+     * register command with version and description builtin
+     * @param command
+     */
+    command(<span class="hljs-params">command: <span class="hljs-built_in">string</span></span>): program.Command
+    /**
+     * compile Handlebars template
+     * @param templateOrFilePath path to templates
+     * @param data data
+     * @param options
+     */
+    compile(<span class="hljs-params">
+        templateOrFilePath: <span class="hljs-built_in">string</span>,
+        data: <span class="hljs-built_in">any</span>,
+        options?: CompileOptions
+    </span>): string
+    /**
+     * write files to destination
+     * @param path
+     * @param data
+     * @param options
+     */
+    write(<span class="hljs-params">
+        path: <span class="hljs-built_in">string</span>,
+        data: <span class="hljs-built_in">any</span>,
+        options?: WriteFileOptions | <span class="hljs-built_in">string</span>
+    </span>): Promise&lt;void&gt;
+    /**
+     * write file
+     * @param path
+     * @param data
+     * @param options
+     */
+    writeFile(<span class="hljs-params">
+        path: <span class="hljs-built_in">string</span>,
+        data: <span class="hljs-built_in">any</span>,
+        options?: WriteFileOptions | <span class="hljs-built_in">string</span>
+    </span>): Promise&lt;void&gt;
+    /**
+     * compile and write file to destination
+     * @param template path/to/hbs
+     * @param dist path/file/will/write/to
+     * @param data data will pass to templates
+     */
+    tmpl(<span class="hljs-params">template: <span class="hljs-built_in">string</span>, dist: <span class="hljs-built_in">string</span>, data: <span class="hljs-built_in">any</span></span>): Promise&lt;void&gt;
+    /**
+     * compile and write file to destination
+     * @param template path/to/hbs
+     * @param dist path/file/will/write/to
+     * @param data data will pass to templates
+     */
+    tmplWithFormat(<span class="hljs-params">
+        template: <span class="hljs-built_in">string</span>,
+        dist: <span class="hljs-built_in">string</span>,
+        data: <span class="hljs-built_in">any</span>,
+        options?: Options
+    </span>): Promise&lt;void&gt;
+    /**
+     * compile and write file to destination
+     * @param template path/to/hbs
+     * @param data data will pass to templates
+     */
+    format(<span class="hljs-params">code: <span class="hljs-built_in">string</span>, options?: Options</span>): Promise&lt;string&gt;
+    /**
+     * questions
+     * @param questions
+     */
+    prompt&lt;T = Answers&gt;(<span class="hljs-params">questions: Questions</span>): Promise&lt;T&gt;
+    expand(<span class="hljs-params">
+        file: <span class="hljs-built_in">string</span>
+    </span>): Promise&lt;{
+        overwrite: <span class="hljs-string">'overwrite'</span> | <span class="hljs-string">'diff'</span> | <span class="hljs-string">'abort'</span>
+    }&gt;
+    <span class="hljs-comment">/**
+     * get pretty name
+     * @param  {string} name
+     */</span>
+    getPrettyName(name: <span class="hljs-built_in">string</span>): <span class="hljs-built_in">string</span>
+    <span class="hljs-comment">/**
+     * run actions
+     * @param  {(Action|null)[]} actions
+     * @param  {T} answers
+     */</span>
+    runActions: &lt;T&gt;<span class="hljs-function">(<span class="hljs-params">actions: (<span class="hljs-params">Action | <span class="hljs-literal">null</span></span>)[], answers: T</span>) =&gt;</span> <span class="hljs-built_in">Promise</span>&lt;<span class="hljs-built_in">void</span>&gt;
+    <span class="hljs-comment">/**
+     * log for plugin
+     *
+     * @param formatter
+     *
+     *  ### Formatters
+     *  Debug uses [printf-style](https://wikipedia.org/wiki/Printf_format_string) formatting.
+     *  Below are the officially supported formatters:
+     *
+     *  | Formatter | Representation |
+     *  |-----------|----------------|
+     *  | `%O`      | Pretty-print an Object on multiple lines. |
+     *  | `%o`      | Pretty-print an Object all on a single line. |
+     *  | `%s`      | String. |
+     *  | `%d`      | Number (both integer and float). |
+     *  | `%j`      | JSON. Replaced with the string '[Circular]' if the argument contains circular references. |
+     *  | `%%`      | Single percent sign ('%'). This does not consume an argument. |
+     *
+     * @memberof Plugin
+     */</span>
+    log: <span class="hljs-function">(<span class="hljs-params">formatter: <span class="hljs-built_in">string</span>, ...args: <span class="hljs-built_in">any</span>[]</span>) =&gt;</span> <span class="hljs-built_in">void</span>
+    <span class="hljs-comment">/**
+     * get a instance of node debug
+     * @param {string} namespace  you can use a customized namespace or
+     * using the default one plugin:[your-plugin]
+     * @memberof Plugin
+     */</span>
+    debug: <span class="hljs-function">(<span class="hljs-params"><span class="hljs-keyword">namespace</span>?: <span class="hljs-built_in">string</span></span>) =&gt;</span> debug.IDebugger
+}
+</code></pre>
+</span></div></article></div><div class="docs-prevnext"></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#plugin-definitions">Plugin Definitions</a></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/cli/" class="nav-home"></a><div><h5>Docs</h5><a href="/cli/docs/api.html">API Reference</a><a href="/cli/docs/how.html">How to create plugin</a><a class="github-button" href="https://github.com/merryjs/cli" data-icon="octicon-star" data-count-href="/merryjs/cli/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a></div></section></footer></div></body></html>
