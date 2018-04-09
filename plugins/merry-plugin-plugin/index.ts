@@ -72,7 +72,7 @@ export default (api: Plugin) => {
 					templateFile: './templates/tsconfig.hbs',
 					path: 'tsconfig.json',
 					format: {
-						parser: 'typescript',
+						parser: 'json',
 					},
 				})
 			} else {
