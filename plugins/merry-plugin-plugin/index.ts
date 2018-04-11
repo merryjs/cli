@@ -106,12 +106,10 @@ export default (api: Plugin) => {
 				answers
 			)
 
-			if (options.install && answers.typescript) {
+			if (options.install) {
 				const registry = options.registry
 					? ' --registry=' + options.registry
 					: ''
-				await linkPluginDeps(cwd, '@merryjs/cli', registry)
-				await linkPluginDeps(cwd, 'typescript', registry)
 				await install(cwd, registry)
 			}
 		})
