@@ -190,6 +190,7 @@ export class Plugin {
 		data: any,
 		options?: Options
 	) {
+		dist = dist.replace(/\\/g, '/')
 		const code = this.compile(template, data)
 		dist = this.handlebars.compile(dist)(data)
 		return this.write(dist, await this.format(code, options))
