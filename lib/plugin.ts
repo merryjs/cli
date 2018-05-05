@@ -174,6 +174,7 @@ export class Plugin {
 	 * @param data data will pass to templates
 	 */
 	public async tmpl(template: string, dist: string, data: any) {
+		dist = dist.replace(/\\/g, '/')
 		dist = this.handlebars.compile(dist)(data)
 		return this.write(dist, this.compile(template, data))
 	}
