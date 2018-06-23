@@ -24,7 +24,7 @@ export const getConf = (): PkgConf => {
 
 	conf = pkgConf.sync(namespace)
 	// rc configuration does not support merry config commands
-	if (!conf) {
+	if (JSON.stringify(conf) === '{}') {
 		conf = require('rc')(namespace, {})
 	}
 	conf = conf || {}
