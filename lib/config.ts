@@ -22,7 +22,12 @@ export const getConf = (): PkgConf => {
 		return conf
 	}
 
-	conf = pkgConf.sync(namespace) || {}
+	conf = pkgConf.sync(namespace)
+	// rc configuration does not support merry config commands
+	if (!conf) {
+		conf = require('rc')(namespace, {})
+	}
+	conf = conf || {}
 	if (!conf.dist) {
 		conf.dist = 'src'
 	}

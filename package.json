@@ -1,6 +1,6 @@
 {
   "name": "@merryjs/cli",
-  "version": "1.6.4",
+  "version": "1.6.5",
   "description": "A cli for everything ❤️",
   "license": "MIT",
   "repository": "bang88/merry-cli",
@@ -40,6 +40,7 @@
     "pkg-conf": "^2.1.0",
     "pkg-up": "^2.0.0",
     "prettier": "^1.11.0",
+    "rc": "^1.2.8",
     "requireg": "^0.1.7",
     "resolve-pkg": "^1.0.0",
     "tslib": "^1.9.0"
