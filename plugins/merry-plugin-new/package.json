@@ -7,8 +7,5 @@
   "keywords": [
     "merry-plugin-new",
     "merry-plugin"
-  ],
-  "dependencies": {
-    "degit": "^2.0.2"
-  }
+  ]
 }
