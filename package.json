@@ -48,7 +48,7 @@
     "pkg-up": "^2.0.0",
     "prettier": "^1.14.3",
     "rc": "^1.2.8",
-    "requireg": "^0.2.1",
+    "requireg": "0.1.7",
     "resolve-pkg": "^1.0.0",
     "tslib": "^1.9.0"
   },
