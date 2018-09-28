@@ -119,7 +119,7 @@ export class Plugin {
 		options: WriteFileOptions | string = 'utf-8'
 	) {
 		const exist = await fs.pathExists(path)
-		if (exist) {
+		if (!this.conf.overwrite || exist) {
 			const action = await this.expand(path)
 			switch (action.overwrite) {
 				case 'diff':
