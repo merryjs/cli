@@ -82,6 +82,12 @@ export class Plugin {
 			.description(this.pkg.description)
 	}
 	/**
+	 * Output help information for this command.
+	 */
+	public outputHelp() {
+		this.program.outputHelp()
+	}
+	/**
 	 * compile Handlebars template
 	 * @param templateOrFilePath path to templates
 	 * @param data data

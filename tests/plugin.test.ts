@@ -21,4 +21,5 @@ test('fs', async t => {
 	await plugin.fs.writeFile(md, 'test')
 	t.is(await plugin.fs.readFile(md, 'utf-8'), 'test')
 	await plugin.fs.unlink(md)
+	plugin.outputHelp()
 })
