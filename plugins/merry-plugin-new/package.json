@@ -4,11 +4,5 @@
   "main": "index.js",
   "license": "MIT",
   "description": "create new project based on templates",
-  "keywords": [
-    "merry-plugin-new",
-    "merry-plugin"
-  ],
-  "dependencies": {
-    "degit": "^2.0.2"
-  }
+  "keywords": ["merry-plugin-new", "merry-plugin"]
 }

@@ -44,6 +44,7 @@ export class App {
 			return
 		}
 		if (checkDeps) {
+			debug('checking dependencies...')
 			// add missing deps
 			await require('check-dependencies')({
 				install: true,
