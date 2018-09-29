@@ -4,5 +4,12 @@
   "main": "index.js",
   "license": "MIT",
   "description": "download and extract files use download",
-  "keywords": ["merry-plugin-dl", "merry-plugin"]
+  "keywords": [
+    "merry-plugin-dl",
+    "merry-plugin"
+  ],
+  "dependencies": {
+    "download": "^7.1.0",
+    "got": "^9.2.2"
+  }
 }
