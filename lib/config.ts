@@ -15,10 +15,6 @@ export interface PkgConf {
 	 * plugin prefix
 	 */
 	prefix: string
-	/**
-	 * overwrite existing files
-	 */
-	overwrite: boolean
 }
 let conf: PkgConf
 export const getConf = (): PkgConf => {

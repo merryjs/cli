@@ -80,6 +80,7 @@ export class Plugin {
 			.command(command)
 			.version(this.pkg.version, '-v, --version')
 			.description(this.pkg.description)
+			.option('-overwrite, --overwrite', 'overwrite file if exists')
 	}
 	/**
 	 * Output help information for this command.
@@ -125,7 +126,7 @@ export class Plugin {
 		options: WriteFileOptions | string = 'utf-8'
 	) {
 		const exist = await fs.pathExists(path)
-		if (!this.conf.overwrite || exist) {
+		if (!this.program.overwrite && exist) {
 			const action = await this.expand(path)
 			switch (action.overwrite) {
 				case 'diff':
