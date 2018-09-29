@@ -58,7 +58,7 @@ export class Plugin {
 	 */
 	public readonly cwd: string
 	constructor(
-		private readonly program: program.CommanderStatic,
+		private program: program.Command,
 		public readonly conf: PkgConf,
 		/**
 		 * absolutely package path
@@ -76,11 +76,12 @@ export class Plugin {
 	 * @param command
 	 */
 	public command(command: string): program.Command {
-		return this.program
+		this.program = this.program
 			.command(command)
 			.version(this.pkg.version, '-v, --version')
 			.description(this.pkg.description)
 			.option('-overwrite, --overwrite', 'overwrite file if exists')
+		return this.program
 	}
 	/**
 	 * Output help information for this command.
@@ -126,7 +127,7 @@ export class Plugin {
 		options: WriteFileOptions | string = 'utf-8'
 	) {
 		const exist = await fs.pathExists(path)
-		if (!this.program.overwrite && exist) {
+		if (!(this.program.opts() && this.program.opts().overwrite) && exist) {
 			const action = await this.expand(path)
 			switch (action.overwrite) {
 				case 'diff':
