@@ -127,7 +127,13 @@ export class App {
 		}
 	}
 	private async loadGlobalPlugins() {
-		await this.loadPluginsByDir(globalDirs.npm.packages, false)
+		const npmPackages = fs.pathExistsSync(globalDirs.npm.packages)
+			? globalDirs.npm.packages
+			: (globalDirs.npm.packages as string).includes('Cellar')
+				? '/usr/local/lib/node_modules'
+				: globalDirs.npm.packages
+
+		await this.loadPluginsByDir(npmPackages, false)
 		await this.loadPluginsByDir(globalDirs.yarn.packages, false)
 	}
 	/**
