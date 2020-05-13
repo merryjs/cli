@@ -90,16 +90,10 @@ export class Plugin {
 		this.program.outputHelp()
 	}
 	/**
-	 * compile Handlebars template
-	 * @param templateOrFilePath path to templates
-	 * @param data data
-	 * @param options
+	 * get template string by path or just strings.
+	 * @param templateOrFilePath
 	 */
-	public compile(
-		templateOrFilePath: string,
-		data: any,
-		options?: CompileOptions
-	) {
+	public getTemplateString(templateOrFilePath: string) {
 		//  content
 		const isTemplateString =
 			templateOrFilePath === path.basename(templateOrFilePath)
@@ -113,7 +107,23 @@ export class Plugin {
 			}
 			input = fs.readFileSync(filePath, 'utf-8')
 		}
-		return this.handlebars.compile(input, options)(data)
+		return input
+	}
+	/**
+	 * compile Handlebars template
+	 * @param templateOrFilePath path to templates
+	 * @param data data
+	 * @param options
+	 */
+	public compile(
+		templateOrFilePath: string,
+		data: any,
+		options?: CompileOptions
+	) {
+		return this.handlebars.compile(
+			this.getTemplateString(templateOrFilePath),
+			options
+		)(data)
 	}
 	/**
 	 * write files to destination

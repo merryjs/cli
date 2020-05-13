@@ -15,6 +15,8 @@ export interface PkgConf {
 	 * plugin prefix
 	 */
 	prefix: string
+
+	[key: string]: any
 }
 let conf: PkgConf
 export const getConf = (): PkgConf => {
